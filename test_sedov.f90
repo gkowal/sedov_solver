@@ -33,7 +33,7 @@ program test_sedov
 
 ! include subroutines and variables from other modules
 !
-!   use sedov_solver, only : sedov_1d
+  use sedov_solver, only : sedov_1d
 
   implicit none
 
@@ -88,8 +88,8 @@ program test_sedov
 
 ! get the solution for all spatial points at once
 !
-!    call sedov_1d(time, nstep, rp, eblast, omega, xgeom, rho0, vel0, ener0      &
-!                , pres0, cs0, gamma, dn, en, pr, vl, cs)
+   call sedov_1d(nmax, time, nstep, rp, eblast, omega, xgeom, rho0, vel0       &
+               , ener0, pres0, cs0, gamma, dn, en, pr, vl, cs)
 
 ! store solution in the output file
 !

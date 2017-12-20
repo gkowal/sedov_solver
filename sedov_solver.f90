@@ -52,15 +52,30 @@ module sedov_solver
 !
 !   Subroutine converts a physical position to corresponding array index.
 !
-!   Arguments:
+!   Input arguments:
 !
-!     x - the position vector in the domain coordinates;
-!     p - the index vector in the domain dimensions;
+!     time     - temporal point where solution is desired [seconds]
+!     xpos(:)  - spatial points where solution is desired [cm]
+!     eblast   - energy of blast [erg]
+!     rho0     - ambient density [g/cm**3]  rho = rho0 * r**(-omega_in)
+!     omega_in - density power law exponent rho = rho0 * r**(-omega_in)
+!     vel0     - ambient material speed [cm/s]
+!     pres0    - ambient pressure [erg/cm**3]
+!     cs0      - ambient sound speed [cm/s]
+!     gam0     - gamma law equation of state
+!     xgeom_in - geometry factor, 3=spherical, 2=cylindircal, 1=planar
 !
+!   Output arguments:
+!
+!     den(:)   - density     [g/cm**3]
+!     ener(:)  - specific internal energy [erg/g]
+!     pres(:)  - presssure [erg/cm**3]
+!     vel(:)   - velocity [cm/s]
+!     cs(:)    - sound speed [cm/s]
 !
 !===============================================================================
 !
-  subroutine sedov_1d(time, nstep, xpos, eblast, omega_in, xgeom_in,           &
+  subroutine sedov_1d(n, time, nstep, xpos, eblast, omega_in, xgeom_in,        &
                       rho0, vel0, ener0, pres0, cs0, gam0,                     &
                       den, ener, pres, vel, cs)
 
@@ -70,10 +85,12 @@ module sedov_solver
 
 ! subroutine arguments
 !
-    integer                         :: nstep
-    real(kind=16)                   :: time, eblast, rho0, omega_in, vel0,     &
-                                       ener0, pres0, cs0, gam0, xgeom_in
-    real(kind=16), dimension(nstep) :: xpos, den, ener, pres, vel, cs
+    integer                    , intent(in)  :: n, nstep
+    real(kind=16)              , intent(in)  :: time, eblast, rho0, omega_in,  &
+                                                vel0, ener0, pres0, cs0, gam0, &
+                                                xgeom_in
+    real(kind=16), dimension(n), intent(in)  :: xpos
+    real(kind=16), dimension(n), intent(out) :: den, ener, pres, vel, cs
 !
 !-------------------------------------------------------------------------------
 !
