@@ -38,8 +38,8 @@ name = test_sedov
 
 default: $(name).x
 
-sources = test_sedov.f90
-objects = test_sedov.o
+sources = sedov_solver.f90 test_sedov.f90
+objects = sedov_solver.o test_sedov.o
 files   = $(sources) makefile
 
 $(name).x: $(objects)
@@ -52,6 +52,7 @@ clean-all: clean
 
 #-------------------------------------------------------------------------------
 
-test_sedov.o     : test_sedov.f90
+sedov_solver.o   : sedov_solver.f90
+test_sedov.o     : test_sedov.f90 sedov_solver.o
 
 #-------------------------------------------------------------------------------
